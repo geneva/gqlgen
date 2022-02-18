@@ -40,7 +40,11 @@ var page = template.Must(template.New("graphiql").Parse(`<!DOCTYPE html>
       const wsProto = location.protocol == 'https:' ? 'wss:' : 'ws:';
       const subscriptionUrl = wsProto + '//' + location.host + '{{.endpoint}}';
 
-      const fetcher = GraphiQL.createFetcher({ url, subscriptionUrl });
+      const fetcher = GraphiQL.createFetcher({
+        url,
+        subscriptionUrl,
+        wsConnectionParams: { Authorization: 'Bearer ' + prompt('enter your bearer token')}
+      });
       ReactDOM.render(
         React.createElement(GraphiQL, {
           fetcher: fetcher,

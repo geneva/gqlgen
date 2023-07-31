@@ -72,9 +72,6 @@ func (f *federation) MutateConfig(cfg *config.Config) error {
 	cfg.Directives["provides"] = config.DirectiveConfig{SkipRuntime: true}
 	cfg.Directives["key"] = config.DirectiveConfig{SkipRuntime: true}
 	cfg.Directives["extends"] = config.DirectiveConfig{SkipRuntime: true}
-	cfg.Directives["entityResolver"] = config.DirectiveConfig{SkipRuntime: true}
-	cfg.Directives["interfaceObject"] = config.DirectiveConfig{SkipRuntime: true}
-	cfg.Directives["composeDirective"] = config.DirectiveConfig{SkipRuntime: true}
 
 	// Federation 2 specific directives
 	if f.Version == 2 {
@@ -83,6 +80,9 @@ func (f *federation) MutateConfig(cfg *config.Config) error {
 		cfg.Directives["tag"] = config.DirectiveConfig{SkipRuntime: true}
 		cfg.Directives["override"] = config.DirectiveConfig{SkipRuntime: true}
 		cfg.Directives["inaccessible"] = config.DirectiveConfig{SkipRuntime: true}
+		cfg.Directives["entityResolver"] = config.DirectiveConfig{SkipRuntime: true}
+		cfg.Directives["interfaceObject"] = config.DirectiveConfig{SkipRuntime: true}
+		cfg.Directives["composeDirective"] = config.DirectiveConfig{SkipRuntime: true}
 	}
 
 	return nil

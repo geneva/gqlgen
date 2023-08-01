@@ -5,12 +5,12 @@ import (
 	"path/filepath"
 	"syscall"
 
-	"github.com/99designs/gqlgen/internal/code"
+	"github.com/geneva/gqlgen/internal/code"
 
-	"github.com/99designs/gqlgen/codegen"
-	"github.com/99designs/gqlgen/codegen/config"
-	"github.com/99designs/gqlgen/codegen/templates"
-	"github.com/99designs/gqlgen/plugin"
+	"github.com/geneva/gqlgen/codegen"
+	"github.com/geneva/gqlgen/codegen/config"
+	"github.com/geneva/gqlgen/codegen/templates"
+	"github.com/geneva/gqlgen/plugin"
 )
 
 //go:embed stubs.gotpl

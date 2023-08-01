@@ -9,9 +9,9 @@ import (
 	"strings"
 	"text/template"
 
-	"github.com/99designs/gqlgen/codegen/config"
-	"github.com/99designs/gqlgen/codegen/templates"
-	"github.com/99designs/gqlgen/plugin"
+	"github.com/geneva/gqlgen/codegen/config"
+	"github.com/geneva/gqlgen/codegen/templates"
+	"github.com/geneva/gqlgen/plugin"
 	"github.com/vektah/gqlparser/v2/ast"
 )
 
@@ -203,7 +203,7 @@ func (m *Plugin) MutateConfig(cfg *config.Config) error {
 		cfg.Models.Add(it.Name, cfg.Model.ImportPath()+"."+templates.ToGo(it.Name))
 	}
 	for _, it := range b.Scalars {
-		cfg.Models.Add(it, "github.com/99designs/gqlgen/graphql.String")
+		cfg.Models.Add(it, "github.com/geneva/gqlgen/graphql.String")
 	}
 
 	if len(b.Models) == 0 && len(b.Enums) == 0 && len(b.Interfaces) == 0 && len(b.Scalars) == 0 {
@@ -401,7 +401,7 @@ func (m *Plugin) generateFields(cfg *config.Config, schemaType *ast.Definition) 
 			var err error
 
 			if omittableType == nil {
-				omittableType, err = binder.FindTypeFromName("github.com/99designs/gqlgen/graphql.Omittable")
+				omittableType, err = binder.FindTypeFromName("github.com/geneva/gqlgen/graphql.Omittable")
 				if err != nil {
 					return nil, err
 				}
@@ -612,7 +612,7 @@ func findAndHandleCyclicalRelationships(b *ModelBuild) {
 				continue
 			}
 
-			// the field Type string will be in the form "github.com/99designs/gqlgen/codegen/testserver/followschema.LoopA"
+			// the field Type string will be in the form "github.com/geneva/gqlgen/codegen/testserver/followschema.LoopA"
 			// we only want the part after the last dot: "LoopA"
 			// this could lead to false positives, as we are only checking the name of the struct type, but these
 			// should be extremely rare, if it is even possible at all.

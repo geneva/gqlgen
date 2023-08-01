@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/99designs/gqlgen/client"
-	"github.com/99designs/gqlgen/graphql"
-	"github.com/99designs/gqlgen/graphql/handler"
+	"github.com/geneva/gqlgen/client"
+	"github.com/geneva/gqlgen/graphql"
+	"github.com/geneva/gqlgen/graphql/handler"
 	"github.com/stretchr/testify/require"
 )
 

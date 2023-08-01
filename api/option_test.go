@@ -3,11 +3,11 @@ package api
 import (
 	"testing"
 
-	"github.com/99designs/gqlgen/codegen/config"
-	"github.com/99designs/gqlgen/plugin"
-	"github.com/99designs/gqlgen/plugin/federation"
-	"github.com/99designs/gqlgen/plugin/modelgen"
-	"github.com/99designs/gqlgen/plugin/resolvergen"
+	"github.com/geneva/gqlgen/codegen/config"
+	"github.com/geneva/gqlgen/plugin"
+	"github.com/geneva/gqlgen/plugin/federation"
+	"github.com/geneva/gqlgen/plugin/modelgen"
+	"github.com/geneva/gqlgen/plugin/resolvergen"
 	"github.com/stretchr/testify/require"
 )
 

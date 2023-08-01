@@ -3,9 +3,9 @@ package dataloader
 import (
 	"testing"
 
-	"github.com/99designs/gqlgen/client"
-	"github.com/99designs/gqlgen/graphql/handler"
-	"github.com/99designs/gqlgen/graphql/introspection"
+	"github.com/geneva/gqlgen/client"
+	"github.com/geneva/gqlgen/graphql/handler"
+	"github.com/geneva/gqlgen/graphql/introspection"
 	"github.com/stretchr/testify/require"
 )
 

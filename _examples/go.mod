@@ -1,11 +1,11 @@
-module github.com/99designs/gqlgen/_examples
+module github.com/geneva/gqlgen/_examples
 
 go 1.18
 
-replace github.com/99designs/gqlgen => ../
+replace github.com/geneva/gqlgen => ../
 
 require (
-	github.com/99designs/gqlgen v0.17.32
+	github.com/geneva/gqlgen v0.17.32
 	github.com/gorilla/websocket v1.5.0
 	github.com/mitchellh/mapstructure v1.5.0
 	github.com/opentracing/opentracing-go v1.2.0

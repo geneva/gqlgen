@@ -3,8 +3,8 @@ package federation
 import (
 	"testing"
 
-	"github.com/99designs/gqlgen/codegen"
-	"github.com/99designs/gqlgen/codegen/config"
+	"github.com/geneva/gqlgen/codegen"
+	"github.com/geneva/gqlgen/codegen/config"
 	"github.com/stretchr/testify/require"
 )
 

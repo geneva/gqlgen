@@ -77,9 +77,9 @@ type ComplexityRoot struct {
 }
 
 type EntityResolver interface {
-	FindManufacturerByID(ctx context.Context, obj fedruntime.Entity, id string) (*model.Manufacturer, error)
-	FindProductByManufacturerIDAndID(ctx context.Context, obj fedruntime.Entity, manufacturerID string, id string) (*model.Product, error)
-	FindProductByUpc(ctx context.Context, obj fedruntime.Entity, upc string) (*model.Product, error)
+	FindManufacturerByID(ctx context.Context, id string) (*model.Manufacturer, error)
+	FindProductByManufacturerIDAndID(ctx context.Context, manufacturerID string, id string) (*model.Product, error)
+	FindProductByUpc(ctx context.Context, upc string) (*model.Product, error)
 }
 type QueryResolver interface {
 	TopProducts(ctx context.Context, first *int) ([]*model.Product, error)
@@ -498,7 +498,7 @@ func (ec *executionContext) field___Type_fields_args(ctx context.Context, rawArg
 
 // region    **************************** field.gotpl *****************************
 
-func (ec *executionContext) _Entity_findManufacturerByID(ctx context.Context, field graphql.CollectedField, obj fedruntime.Entity) (ret graphql.Marshaler) {
+func (ec *executionContext) _Entity_findManufacturerByID(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_Entity_findManufacturerByID(ctx, field)
 	if err != nil {
 		return graphql.Null
@@ -512,7 +512,7 @@ func (ec *executionContext) _Entity_findManufacturerByID(ctx context.Context, fi
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Entity().FindManufacturerByID(rctx, obj, fc.Args["id"].(string))
+		return ec.resolvers.Entity().FindManufacturerByID(rctx, fc.Args["id"].(string))
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -559,7 +559,7 @@ func (ec *executionContext) fieldContext_Entity_findManufacturerByID(ctx context
 	return fc, nil
 }
 
-func (ec *executionContext) _Entity_findProductByManufacturerIDAndID(ctx context.Context, field graphql.CollectedField, obj fedruntime.Entity) (ret graphql.Marshaler) {
+func (ec *executionContext) _Entity_findProductByManufacturerIDAndID(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_Entity_findProductByManufacturerIDAndID(ctx, field)
 	if err != nil {
 		return graphql.Null
@@ -573,7 +573,7 @@ func (ec *executionContext) _Entity_findProductByManufacturerIDAndID(ctx context
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Entity().FindProductByManufacturerIDAndID(rctx, obj, fc.Args["manufacturerID"].(string), fc.Args["id"].(string))
+		return ec.resolvers.Entity().FindProductByManufacturerIDAndID(rctx, fc.Args["manufacturerID"].(string), fc.Args["id"].(string))
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -626,7 +626,7 @@ func (ec *executionContext) fieldContext_Entity_findProductByManufacturerIDAndID
 	return fc, nil
 }
 
-func (ec *executionContext) _Entity_findProductByUpc(ctx context.Context, field graphql.CollectedField, obj fedruntime.Entity) (ret graphql.Marshaler) {
+func (ec *executionContext) _Entity_findProductByUpc(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_Entity_findProductByUpc(ctx, field)
 	if err != nil {
 		return graphql.Null
@@ -640,7 +640,7 @@ func (ec *executionContext) _Entity_findProductByUpc(ctx context.Context, field 
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Entity().FindProductByUpc(rctx, obj, fc.Args["upc"].(string))
+		return ec.resolvers.Entity().FindProductByUpc(rctx, fc.Args["upc"].(string))
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -3150,12 +3150,20 @@ func (ec *executionContext) __Entity(ctx context.Context, sel ast.SelectionSet, 
 
 var entityImplementors = []string{"Entity"}
 
-func (ec *executionContext) _Entity(ctx context.Context, sel ast.SelectionSet, obj fedruntime.Entity) graphql.Marshaler {
+func (ec *executionContext) _Entity(ctx context.Context, sel ast.SelectionSet) graphql.Marshaler {
 	fields := graphql.CollectFields(ec.OperationContext, sel, entityImplementors)
+	ctx = graphql.WithFieldContext(ctx, &graphql.FieldContext{
+		Object: "Entity",
+	})
 
 	out := graphql.NewFieldSet(fields)
 	deferred := make(map[string]*graphql.FieldSet)
 	for i, field := range fields {
+		innerCtx := graphql.WithRootFieldContext(ctx, &graphql.RootFieldContext{
+			Object: field.Name,
+			Field:  field,
+		})
+
 		switch field.Name {
 		case "__typename":
 			out.Values[i] = graphql.MarshalString("Entity")
@@ -3168,33 +3176,19 @@ func (ec *executionContext) _Entity(ctx context.Context, sel ast.SelectionSet, o
 						ec.Error(ctx, ec.Recover(ctx, r))
 					}
 				}()
-				res = ec._Entity_findManufacturerByID(ctx, field, obj)
+				res = ec._Entity_findManufacturerByID(ctx, field)
 				if res == graphql.Null {
 					atomic.AddUint32(&fs.Invalids, 1)
 				}
 				return res
 			}
 
-			if field.Deferrable != nil {
-				dfs, ok := deferred[field.Deferrable.Label]
-				di := 0
-				if ok {
-					dfs.AddField(field)
-					di = len(dfs.Values) - 1
-				} else {
-					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
-					deferred[field.Deferrable.Label] = dfs
-				}
-				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
-					return innerFunc(ctx, dfs)
-				})
-
-				// don't run the out.Concurrently() call below
-				out.Values[i] = graphql.Null
-				continue
+			rrm := func(ctx context.Context) graphql.Marshaler {
+				return ec.OperationContext.RootResolverMiddleware(ctx,
+					func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
 			}
 
-			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
 		case "findProductByManufacturerIDAndID":
 			field := field
 
@@ -3204,33 +3198,19 @@ func (ec *executionContext) _Entity(ctx context.Context, sel ast.SelectionSet, o
 						ec.Error(ctx, ec.Recover(ctx, r))
 					}
 				}()
-				res = ec._Entity_findProductByManufacturerIDAndID(ctx, field, obj)
+				res = ec._Entity_findProductByManufacturerIDAndID(ctx, field)
 				if res == graphql.Null {
 					atomic.AddUint32(&fs.Invalids, 1)
 				}
 				return res
 			}
 
-			if field.Deferrable != nil {
-				dfs, ok := deferred[field.Deferrable.Label]
-				di := 0
-				if ok {
-					dfs.AddField(field)
-					di = len(dfs.Values) - 1
-				} else {
-					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
-					deferred[field.Deferrable.Label] = dfs
-				}
-				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
-					return innerFunc(ctx, dfs)
-				})
-
-				// don't run the out.Concurrently() call below
-				out.Values[i] = graphql.Null
-				continue
+			rrm := func(ctx context.Context) graphql.Marshaler {
+				return ec.OperationContext.RootResolverMiddleware(ctx,
+					func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
 			}
 
-			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
 		case "findProductByUpc":
 			field := field
 
@@ -3240,33 +3220,19 @@ func (ec *executionContext) _Entity(ctx context.Context, sel ast.SelectionSet, o
 						ec.Error(ctx, ec.Recover(ctx, r))
 					}
 				}()
-				res = ec._Entity_findProductByUpc(ctx, field, obj)
+				res = ec._Entity_findProductByUpc(ctx, field)
 				if res == graphql.Null {
 					atomic.AddUint32(&fs.Invalids, 1)
 				}
 				return res
 			}
 
-			if field.Deferrable != nil {
-				dfs, ok := deferred[field.Deferrable.Label]
-				di := 0
-				if ok {
-					dfs.AddField(field)
-					di = len(dfs.Values) - 1
-				} else {
-					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
-					deferred[field.Deferrable.Label] = dfs
-				}
-				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
-					return innerFunc(ctx, dfs)
-				})
-
-				// don't run the out.Concurrently() call below
-				out.Values[i] = graphql.Null
-				continue
+			rrm := func(ctx context.Context) graphql.Marshaler {
+				return ec.OperationContext.RootResolverMiddleware(ctx,
+					func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
 			}
 
-			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}
